@@ -125,6 +125,8 @@
                 countdown = 0
                 playerLoaded = false
                 enemyLoaded = false
+
+                document.getElementById("replay").style.display = "inline"
             } 
         }
         /************************************************************** 
@@ -168,7 +170,8 @@
             //Tegne spill-elementer ved oppstart
             drawCharacters()
             renderGame()
-            setInterval(countdownFunction, 1000)
+            
+            //document.getElementById("replay").style.display = "none"
         }
 
         
