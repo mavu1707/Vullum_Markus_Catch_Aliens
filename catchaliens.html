@@ -33,8 +33,7 @@
         let countdown = 10 //Hva countdown skal starte på
         let iconsize = 64
         let gameOver = false
-        
-        const player = { speed: 2 }
+        const player = { speed: 2.5 }
         const enemy = { }
         let aliensCaught = 0;
         let history = []
@@ -136,7 +135,7 @@
         ***************************************************************/
 
         //Kjør funksjonen for nedtelling hver sekund (1000. milisekund)
-        //setInterval(countdownFunction, 1000)
+        setInterval(countdownFunction, 1000)
 
         //Funksjon som tegner/fyller ut alle spill-elementene i canvas:
         function drawGameElements() {
