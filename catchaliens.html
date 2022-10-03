@@ -137,7 +137,7 @@
         ***************************************************************/
 
         //Kjør funksjonen for nedtelling hver sekund (1000. milisekund)
-        setInterval(countdownFunction, 1000)
+        
 
         //Funksjon som tegner/fyller ut alle spill-elementene i canvas:
         function drawGameElements() {
@@ -165,9 +165,13 @@
             //Startverdier
             let countdown = 10
             let gameOver = false
-            playerLoaded = false
-            enemyLoaded = false
+            //Må endre playerLoaded og enemyLoaded til true...
+            //SCOPE!
+            playerLoaded = true
+            enemyLoaded = true
             //Tegne spill-elementer ved oppstart
+            //Setter nedtellingen i play funksjonen for at den ikke skal begynne uten at spiller har trykket på play knappen
+            setInterval(countdownFunction, 1000)
             drawCharacters()
             renderGame()
             
@@ -176,7 +180,7 @@
 
         
         //Kjør hele spillet med playGame-funksjonen
-       playGame()
+       //playGame()
         
     </script>
 

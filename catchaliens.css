@@ -48,3 +48,12 @@ aside {
     top: 1rem;
     right: 1rem;
 }
+
+button{
+    padding: 1rem 4rem;
+    cursor: pointer;
+    color: #fff;
+    background-color: rgb(34, 13, 119);
+    border: none;
+    border-radius: 10px;
+}
