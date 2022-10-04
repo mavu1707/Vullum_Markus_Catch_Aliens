@@ -117,7 +117,7 @@
         //Lag funksjon for nedtelling
         function countdownFunction() {
             countdown--
-            if(countdown == 0) {
+            if(countdown <= 0) {
                 clearInterval(countdownFunction)
                 gameOver = true
                 countdown = 0
