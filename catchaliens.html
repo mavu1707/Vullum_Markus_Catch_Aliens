@@ -14,7 +14,7 @@
     <section>
         <canvas id="gamearea"></canvas>
     </section>
-    <button id="replay" onclick="playGame()">Play</button>
+    <button id="play" onclick="playGame()">Play</button>
     <p><a href="https://www.flaticon.com/free-icons/alien" title="alien icons">Alien icon created by Smashicons</a>, 
     <a href="https://www.flaticon.com/free-icons/spaceship" title="spaceship icons">Spaceship icons created by Freepik</a> - Flaticon</p>
     <aside id="history">
@@ -30,7 +30,7 @@
         ctx.font = "60px Space Mono";
 
         //Gjør klar spillinformasjon
-        let countdown = 5
+        let countdown; //ENDRET fra let countdown = 10
         let iconsize = 64
         let gameOver = false
         const player = { speed: 2 }
@@ -123,7 +123,7 @@
                 countdown = 0
                 playerLoaded = false
                 enemyLoaded = false
-                document.getElementById("replay").style.display = "block"
+                document.getElementById("play").style.display = "block"
             } 
         }
         /************************************************************** 
@@ -155,15 +155,18 @@
         
         //Funksjon for start/restart spill
         function playGame() { //FEIL. Skrivefeil functio --> functio(n)
+            //Fjerner play knappen
+            document.getElementById("play").style.display = "none"
+            
             //Startverdier
-            let countdown = 10
+            countdown = 2 //ENDRET fra let countdown = 10
             let gameOver = false
             playerLoaded = true
             enemyLoaded = true
 
-            document.getElementById("replay").style.display = "none"
             //Kjør funksjonen for nedtelling hver sekund (1000. milisekund)
             setInterval(countdownFunction, 1000)
+
             //Tegne spill-elementer ved oppstart
             drawCharacters()
             renderGame()
