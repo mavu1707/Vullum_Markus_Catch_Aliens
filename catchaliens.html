@@ -30,12 +30,12 @@
         ctx.font = "60px Space Mono";
 
         //Gjør klar spillinformasjon
-        let countdown = 10
+        let countdown = 5
         let iconsize = 64
         let gameOver = false
         const player = { speed: 2 }
         const enemy = { }
-        let aliensCaught = 10;
+        let aliensCaught = 0
         let history = []
         history.length < 1 ? document.getElementById("history").style.display = "none" : document.getElementById("history").style.display = "block"
 
@@ -124,7 +124,6 @@
                 playerLoaded = false
                 enemyLoaded = false
                 document.getElementById("replay").style.display = "block"
-
             } 
         }
         /************************************************************** 
