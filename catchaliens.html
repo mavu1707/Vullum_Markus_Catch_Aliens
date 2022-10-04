@@ -142,10 +142,6 @@
          
          Denne funksjonen teller ned, øverst så teller den ned med -1 uansett. Så er det en if test som sjekker om noen av betingelsene er oppnådd. 
         ***************************************************************/
-
-        //Kjør funksjonen for nedtelling hver sekund (1000. milisekund)
-        
-
         //Funksjon som tegner/fyller ut alle spill-elementene i canvas:
         function drawGameElements() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -177,7 +173,7 @@
             //Fjerner play knappen når playGame funksjonen kjører
             document.getElementById("replay").style.display = "none"
             //Legger koden inn her slik at når playGame funksjonen kjører så blir sekundene "laget" her
-            document.getElementById("time").innerHTML = 4
+            document.getElementById("time").innerHTML = 2
             timer = setInterval(countdownFunction, 1000)
             //Tegne spill-elementer ved oppstart
             drawCharacters()
@@ -185,6 +181,5 @@
         }
         
     </script>
-
 </body>
 </html>
