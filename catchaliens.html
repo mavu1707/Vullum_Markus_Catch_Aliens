@@ -14,7 +14,7 @@
     <section>
         <canvas id="gamearea"></canvas>
     </section>
-    <button id="replay" onclick="rePlay()">Play</button>
+    <button id="replay" onclick="playGame()">Play</button>
     <p><a href="https://www.flaticon.com/free-icons/alien" title="alien icons">Alien icon created by Smashicons</a>, 
     <a href="https://www.flaticon.com/free-icons/spaceship" title="spaceship icons">Spaceship icons created by Freepik</a> - Flaticon</p>
     <aside id="history">
@@ -125,8 +125,6 @@
                 countdown = 0
                 playerLoaded = false
                 enemyLoaded = false
-
-                document.getElementById("replay").style.display = "inline"
             } 
         }
         /************************************************************** 
@@ -165,6 +163,7 @@
             //Startverdier
             let countdown = 10
             let gameOver = false
+            const test = document.getElementById("replay");
             //Må endre playerLoaded og enemyLoaded til true...
             //SCOPE!
             playerLoaded = true
@@ -174,24 +173,12 @@
             setInterval(countdownFunction, 1000)
             drawCharacters()
             renderGame()
+            document.getElementById("time").innerHTML = 4
+            document.getElementById("replay") = 'none'
+            test.style.display = 'block'
 
             //document.getElementById("replay").style.display = "none"
         }
-
-        function rePlay(){
-            const test = document.getElementById("replay");
-
-            if(gameOver = false){
-                test.style.display = 'block'
-            } else {
-                test.style.display = 'none'
-            }
-            playGame()
-        }
-
-        
-        //Kjør hele spillet med playGame-funksjonen
-        //playGame()
         
     </script>
 
