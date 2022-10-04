@@ -9,7 +9,7 @@
 </head>
 <body>
     <header>
-        <p>Time left: <span id="time">60</span> Aliens caught: <span id="points">0</span></p>
+        <p>Time left: <span id="time"></span> Aliens caught: <span id="points">0</span></p>
     </header>
     <section>
         <canvas id="gamearea"></canvas>
@@ -30,7 +30,8 @@
         ctx.font = "60px Space Mono";
 
         //Gjør klar spillinformasjon
-        let countdown = 2 //Hva countdown skal starte på
+        //let countdown = 2 //Hva countdown skal starte på
+        let timer
         let iconsize = 64
         let gameOver = false
         const player = { speed: 2.5 }
@@ -118,13 +119,21 @@
 
         //Lag funksjon for nedtelling
         function countdownFunction() {
+            //Gjør om string til Number
+            //Koden for at timer skal funke
+            let countdown = Number(document.getElementById("time").innerHTML)
             countdown--
-            if(countdown <= 0) {
+            document.getElementById("time").innerHTML = countdown
+            if(countdown == 0) {
+                //For at countdown aldri går forbi 0
                 clearInterval(countdownFunction)
                 gameOver = true
                 countdown = 0
                 playerLoaded = false
                 enemyLoaded = false
+                clearInterval(timer)
+                //Play knappen synes igjen etter countdown har nådd 0
+                document.getElementById("replay").style.display = "block"
             } 
         }
         /************************************************************** 
@@ -163,21 +172,16 @@
             //Startverdier
             let countdown = 10
             let gameOver = false
-            const test = document.getElementById("replay");
-            //Må endre playerLoaded og enemyLoaded til true...
-            //SCOPE!
             playerLoaded = true
             enemyLoaded = true
+            //Fjerner play knappen når playGame funksjonen kjører
+            document.getElementById("replay").style.display = "none"
+            //Legger koden inn her slik at når playGame funksjonen kjører så blir sekundene "laget" her
+            document.getElementById("time").innerHTML = 4
+            timer = setInterval(countdownFunction, 1000)
             //Tegne spill-elementer ved oppstart
-            //Setter nedtellingen i play funksjonen for at den ikke skal begynne uten at spiller har trykket på play knappen
-            setInterval(countdownFunction, 1000)
             drawCharacters()
             renderGame()
-            document.getElementById("time").innerHTML = 4
-            document.getElementById("replay") = 'none'
-            test.style.display = 'block'
-
-            //document.getElementById("replay").style.display = "none"
         }
         
     </script>
