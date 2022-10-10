@@ -14,12 +14,12 @@
     <section>
         <canvas id="gamearea"></canvas>
     </section>
-    <button id="play" onclick="playGame()">Play</button>
+    <button id="replay" onclick="playGame()">Play</button>
     <p><a href="https://www.flaticon.com/free-icons/alien" title="alien icons">Alien icon created by Smashicons</a>, 
     <a href="https://www.flaticon.com/free-icons/spaceship" title="spaceship icons">Spaceship icons created by Freepik</a> - Flaticon</p>
     <aside id="history">
         <h2>Stats</h2>
-        <ol id="points"></ol>
+        <ol id="pointsScore"></ol>
     </aside>
     <script>
         //Sett opp Canvas:
@@ -27,13 +27,13 @@
         canvas.width = 960; //64px ikoner * 11 ruter
         canvas.height = 640; //64px ikoner * 8 ruter
         const ctx = canvas.getContext("2d");
-        ctx.font = "60px Space Mono";
+        ctx.font = "60px Space Mono"; //endrer all tekst som blir skrevet av canvas til Space Mono
 
         //Gjør klar spillinformasjon
-        let countdown; //ENDRET fra let countdown = 10
+        let countdown;
         let iconsize = 64
         let gameOver = false
-        const player = { speed: 2 }
+        const player = { speed: 2 } //Beholder speed på 2, grunnet speed blir for raskt for spillet å rendre hvis den skal være på 250, og med speedmodifier blir det for raskt for de kommende rundene
         const enemy = { }
         let aliensCaught = 0
         let history = []
@@ -51,6 +51,8 @@
         enemyImage.onload = () => { enemyLoaded = true; }
         enemyImage.src = "img/alien.png"
 
+        //Legge til zoorg__________________________________________________________________________________________________________
+
         //Lag en funksjon som kjører i gang spillelementene
         //Plasser spilleren i midten av brettet, og fienden et vilkårlig sted innenfor spillbrettet
         function drawCharacters() {
@@ -58,6 +60,11 @@
             player.y = canvas.height / 2;
             enemy.x = (iconsize / 2) + (Math.random() * (canvas.width - iconsize));
             enemy.y = (iconsize / 2) + (Math.random() * (canvas.height - iconsize));
+            /*Legger til ny enemy_______________________________________________________________________________
+            Må lage nye variabler for newEnemy elementet, newEnemy = newEnemy + 5; Legge dette til aliensCaught++ document.getElementById("testet").innerHTML for det nye bildet elementet i mappen
+            newEnemy.x = (iconsize / 2) + (Math.random() * (canvas.width - iconsize))
+            newEnemy.y = (iconsize / 2) + (Math.random() * (canvas.width - iconsize))
+            */
         }
         /************************************************************** 
          OPPGAVE 2 - KOMMENTAR 1
@@ -93,7 +100,6 @@
          og når den er sluppet opp igjen. 
          Vi må vite om player skal flyttes dersom en knapp blir trykket ned, men også hva som skal skje dersom den knappen blir sluppet. Slik at f.eks player ikonet ikke fortsetter ut i ingensteds når man slipper knappen
         ***************************************************************/
-        
         //Funksjon som modifiserer spillerens posisjon på spillbrettet:
         function playerMovement(speedModifier) {
             //Flytt player i riktig retning
@@ -120,10 +126,16 @@
             if(countdown <= 0) {
                 clearInterval(countdownFunction)
                 gameOver = true
+                document.getElementById("replay").style.display = "block"
                 countdown = 0
                 playerLoaded = false
                 enemyLoaded = false
-                document.getElementById("play").style.display = "block"
+
+                //For å lagre highscore i elementet history
+                history = history++;
+                document.getElementById("history").style.display = "block"
+                document.getElementById("pointsScore").innerHTML = history;
+                history.push(aliensCaught)
             } 
         }
         /************************************************************** 
@@ -132,15 +144,31 @@
          Denne funksjonen teller ned, øverst så teller den ned med -1 uansett. Så er det en if test som sjekker om noen av betingelsene er oppnådd. 
         ***************************************************************/
 
+        //Kjør funksjonen for nedtelling hver sekund (1000. milisekund)
+        setInterval(countdownFunction, 1000)
+
         //Funksjon som tegner/fyller ut alle spill-elementene i canvas:
         function drawGameElements() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             ctx.fillStyle = "red" //Endrer fargen til GAME OVER til rød
             playerLoaded ? ctx.drawImage(playerImage, player.x, player.y) : null
             enemyLoaded ? ctx.drawImage(enemyImage, enemy.x, enemy.y) : null
+            //Endret hvor på canvas elementet Game Over vises (posisjon)
             gameOver ? ctx.fillText("GAME OVER!", 300, 320) : null
             document.getElementById("time").innerHTML = countdown
             document.getElementById("points").innerHTML = aliensCaught
+
+            //border element_____________________________________________________________________________________
+            /*
+            Alle elementene er kvadrater ikke Sirkler!!!!!!!!!!!!!!!!!!!
+            if playermovement (bporder < 0){
+                sjekke om player treffer border på left side
+
+            }else if(border - playerSize){
+                sjekker om player treffer på høyre side
+            }
+            samme med høyde!
+            */
         }
 
         //Funksjon som kjører spillet
@@ -155,23 +183,24 @@
         
         //Funksjon for start/restart spill
         function playGame() { //FEIL. Skrivefeil functio --> functio(n)
-            //Fjerner play knappen
-            document.getElementById("play").style.display = "none"
-            
             //Startverdier
-            countdown = 5 //ENDRET fra let countdown = 10
-            let gameOver = false
+            //Endret let countdown variabel til å bare deifnere hva som alerede ble definert i de globale variablene
+            //"reseter" score til 0 hver gang man skal spille et nytt spill
+            aliensCaught = 0
+            //Definerer hva countdown variabelen skal være
+            countdown = 10 //60
+            gameOver = false
+            //player- og enemyLoaded endret til true, de må vises når play knappen blir trykket på
             playerLoaded = true
             enemyLoaded = true
 
-            //Kjør funksjonen for nedtelling hver sekund (1000. milisekund)
-            setInterval(countdownFunction, 1000)
-
+            document.getElementById("replay").style.display = "none"
+            
             //Tegne spill-elementer ved oppstart
             drawCharacters()
             renderGame()
         }
-    </script>
 
+    </script>
 </body>
 </html>
