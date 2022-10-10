@@ -60,9 +60,6 @@
         enemy2Image.onload = () => { enemy2Loaded = true; }
         enemy2Image.src = "img/zorber.png"
 
-
-        //Legge til zoorg__________________________________________________________________________________________________________
-
         //Lag en funksjon som kjører i gang spillelementene
         //Plasser spilleren i midten av brettet, og fienden et vilkårlig sted innenfor spillbrettet
         function drawCharacters() {
@@ -88,6 +85,7 @@
         //Sjekk om spilleren har trykket ned (og holder) en tast:
         document.addEventListener('keydown', buttonPressed);
         document.addEventListener('keyup', buttonReleased);
+
         //Gjør klar variabler for å bestemme hvilken retning som er aktiv:
         let left = false
         let right = false
@@ -122,12 +120,14 @@
             if(event.key === "ArrowUp") { up = false } 
             if(event.key === "ArrowDown") { down = false } 
         }
+
         /************************************************************** 
          OPPGAVE 2 - KOMMENTAR 2
          Forklar hvorfor vi trenger å sjekke både når en knapp er trykket ned,
          og når den er sluppet opp igjen. 
          Vi må vite om player skal flyttes dersom en knapp blir trykket ned, men også hva som skal skje dersom den knappen blir sluppet. Slik at f.eks player ikonet ikke fortsetter ut i ingensteds når man slipper knappen
         ***************************************************************/
+
         //Funksjon som modifiserer spillerens posisjon på spillbrettet:
         let testy = 100
         let testx = 100
@@ -212,18 +212,6 @@
             gameOver ? ctx.fillText("GAME OVER!", 300, 320) : null
             document.getElementById("time").innerHTML = countdown
             document.getElementById("points").innerHTML = aliensCaught
-
-            //border element_____________________________________________________________________________________
-            /*
-            Alle elementene er kvadrater ikke Sirkler!!!!!!!!!!!!!!!!!!!
-            if playermovement (bporder < 0){
-                sjekke om player treffer border på left side
-
-            }else if(border - playerSize){
-                sjekker om player treffer på høyre side
-            }
-            samme med høyde!
-            */
         }
 
         //Funksjon som kjører spillet
@@ -235,8 +223,10 @@
 
         // Cross-browser support for requestAnimationFrame (https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame)
         requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame || window.mozRequestAnimationFrame;
+
         //Har en variabel som er = 1, dette er for at denne ikke skal fortsette å kjøre sammen med countdown som går hele tiden i bakgrunnen
         let x = 1
+
         //Funksjon for start/restart spill
         function playGame() { //FEIL. Skrivefeil functio --> functio(n)
             //Startverdier
@@ -244,7 +234,7 @@
             //"reseter" score til 0 hver gang man skal spille et nytt spill
             aliensCaught = 0
             //Definerer hva countdown variabelen skal være
-            countdown = 60 //60
+            countdown = 60
             gameOver = false
             //player- og enemyLoaded endret til true, de må vises når play knappen blir trykket på
             playerLoaded = true
@@ -258,7 +248,6 @@
             drawZorber()
             renderGame()
         }
-
     </script>
 </body>
 </html>
