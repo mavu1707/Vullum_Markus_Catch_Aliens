@@ -35,6 +35,8 @@
         let iconsize = 64
         let gameOver = false
         const player = { speed: 2 } //Beholder speed på 2, grunnet speed blir for raskt for spillet å rendre hvis den skal være på 250, og med speedmodifier blir det for raskt for de kommende rundene
+        let x = 2
+        let y = 2
         const enemy = { }
         const enemy2 = { }
         let aliensCaught = 0
@@ -59,6 +61,9 @@
         const enemy2Image = new Image();
         enemy2Image.onload = () => { enemy2Loaded = true; }
         enemy2Image.src = "img/zorber.png"
+
+
+        //Legge til zoorg__________________________________________________________________________________________________________
 
         //Lag en funksjon som kjører i gang spillelementene
         //Plasser spilleren i midten av brettet, og fienden et vilkårlig sted innenfor spillbrettet
@@ -85,59 +90,57 @@
         //Sjekk om spilleren har trykket ned (og holder) en tast:
         document.addEventListener('keydown', buttonPressed);
         document.addEventListener('keyup', buttonReleased);
-
         //Gjør klar variabler for å bestemme hvilken retning som er aktiv:
-        let left = false
         let right = false
+        let left = false
         let up = false
         let down = false
- 
+        
+        
         //Set retningsvariabel til true hvis riktig piltast er trykket:
         function buttonPressed(event) { //FEIL. funksjoner trneger en åpning og lukke bracket {}
-            if(event.key === "ArrowLeft") { left = true } 
-            if(event.key === "ArrowRight") { right = true } 
+            if(event.key === "ArrowRight") { right = true }
+            if(event.key === "ArrowLeft") { left = true }  
             if(event.key === "ArrowUp") { up = true } //FEIL. Fejernet . som stod bak {up = true}(.)
             if(event.key === "ArrowDown") { down = true } 
+            
            
         }
-        /* sjekker om spilleren går uttenfor spillbrettet___________________________________________________________________________________________________________________________________
-         if(
-                x + player.width > canvas.width ||
-                x + player.width < player.width ||
-                y + player.height > canvas.height ||
-                y + player.width < player.height
-            ){
-                right = false
-                left = false
-                up = false
-                down = false
-            }
-        */
+   
         //Sett retningsvariabel til false hvis piltasten blir sluppet opp:
         function buttonReleased(event) {
+            if(event.key === "ArrowRight") { right = false }
             if(event.key === "ArrowLeft") { left = false } 
-            if(event.key === "ArrowRight") { right = false } 
             if(event.key === "ArrowUp") { up = false } 
             if(event.key === "ArrowDown") { down = false } 
         }
-
         /************************************************************** 
          OPPGAVE 2 - KOMMENTAR 2
          Forklar hvorfor vi trenger å sjekke både når en knapp er trykket ned,
          og når den er sluppet opp igjen. 
          Vi må vite om player skal flyttes dersom en knapp blir trykket ned, men også hva som skal skje dersom den knappen blir sluppet. Slik at f.eks player ikonet ikke fortsetter ut i ingensteds når man slipper knappen
         ***************************************************************/
-
         //Funksjon som modifiserer spillerens posisjon på spillbrettet:
-        let testy = 100
-        let testx = 100
         function playerMovement(speedModifier) {
             //Flytt player i riktig retning
-            left ? player.x -= player.speed * (speedModifier) : null //FEIL. Fjernet ekstra ? i den øverste if else statementen
             right ? player.x += player.speed * speedModifier : null
+            left ? player.x -= player.speed * (speedModifier) : null //FEIL. Fjernet ekstra ? i den øverste if else statementen
             up ? player.y -= player.speed * speedModifier : null
             down ? player.y += player.speed * speedModifier : null
-
+            
+            //SJekker om player går uttenfor canvas
+            if(
+                canvas.width + (iconsize / 2) < player.x || //Høyre side kollisjon
+                x + (iconsize / 2) > player.x || //Venstre kollisjon
+                y + (iconsize / 2) > player.y ||//Topp kollisjon
+                canvas.height + (iconsize / 2) < player.y //Bunn kollisjon
+            ){
+                right = false
+                left = false
+                up = false
+                down = false
+            }
+            
             //Sjekk om player treffer fienden
             if(
                 player.x <= (enemy.x + (iconsize / 2)) &&
@@ -174,10 +177,10 @@
 
 
                 //For å lagre highscore i arrayen history
-                if (x === 1) {
+                if (z === 1) {
                     //bruker .push for å pushe inn i den tomme arrayen
                     history.push(aliensCaught)
-                    x = 0
+                    z = 0
                     //printout må være en tom string slik at den ikke pusher runde 1 og runde 2 osv runder, men kun den runden som ble spilt
                     printout = ""
                     //Dette for å vise selve elementet
@@ -223,10 +226,8 @@
 
         // Cross-browser support for requestAnimationFrame (https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame)
         requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame || window.mozRequestAnimationFrame;
-
         //Har en variabel som er = 1, dette er for at denne ikke skal fortsette å kjøre sammen med countdown som går hele tiden i bakgrunnen
-        let x = 1
-
+        let z = 1
         //Funksjon for start/restart spill
         function playGame() { //FEIL. Skrivefeil functio --> functio(n)
             //Startverdier
@@ -240,7 +241,7 @@
             playerLoaded = true
             enemyLoaded = true
             enemy2Loaded = true
-            x = 1
+            z = 1
             document.getElementById("replay").style.display = "none"
             
             //Tegne spill-elementer ved oppstart
@@ -248,6 +249,7 @@
             drawZorber()
             renderGame()
         }
+
     </script>
 </body>
 </html>
