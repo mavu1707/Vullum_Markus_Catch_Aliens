@@ -19,6 +19,7 @@
     <a href="https://www.flaticon.com/free-icons/spaceship" title="spaceship icons">Spaceship icons created by Freepik</a> - Flaticon</p>
     <aside id="history">
         <h2>Stats</h2>
+        <!--Endret id navnet fordi points var alere brukt i <span> elementet i <header>-->
         <ol id="pointsScore"></ol>
     </aside>
     <script>
@@ -37,6 +38,8 @@
         const enemy = { }
         let aliensCaught = 0
         let history = []
+        //printout for map funksjonen for highscore
+        let printout = ""
         history.length < 1 ? document.getElementById("history").style.display = "none" : document.getElementById("history").style.display = "block"
 
         //Gjør klar bakgrunnsbilde for spiller
@@ -100,6 +103,7 @@
          og når den er sluppet opp igjen. 
          Vi må vite om player skal flyttes dersom en knapp blir trykket ned, men også hva som skal skje dersom den knappen blir sluppet. Slik at f.eks player ikonet ikke fortsetter ut i ingensteds når man slipper knappen
         ***************************************************************/
+       
         //Funksjon som modifiserer spillerens posisjon på spillbrettet:
         function playerMovement(speedModifier) {
             //Flytt player i riktig retning
@@ -131,11 +135,23 @@
                 playerLoaded = false
                 enemyLoaded = false
 
-                //For å lagre highscore i elementet history
-                history = history++;
-                document.getElementById("history").style.display = "block"
-                document.getElementById("pointsScore").innerHTML = history;
-                history.push(aliensCaught)
+                //For å lagre highscore i arrayen history
+                if (x === 1) {
+                    //bruker .push for å pushe inn i den tomme arrayen
+                    history.push(aliensCaught)
+                    x = 0
+                    //printout må være en tom string slik at den ikke pusher runde 1 og runde 2 osv runder, men kun den runden som ble spilt
+                    printout = ""
+                    //Dette for å vise selve elementet
+                    document.getElementById("history").style.display = "block"
+                    //for å pushe det ut til riktig html element
+                    document.getElementById("pointsScore").innerHTML = history;
+                    //bruker .map og ternery operator for å skrive ut poeng i et listeelement
+                    history.map(
+                    (score) => {printout += `<li>${score}</li>`})
+                    //Skriver ut poeng til Score brettet
+                    document.getElementById("pointsScore").innerHTML = printout
+                }
             } 
         }
         /************************************************************** 
@@ -180,7 +196,8 @@
 
         // Cross-browser support for requestAnimationFrame (https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame)
         requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame || window.mozRequestAnimationFrame;
-        
+        //Har en variabel som er = 1, dette er for at denne ikke skal fortsette å kjøre sammen med countdown som går hele tiden i bakgrunnen
+        let x = 1
         //Funksjon for start/restart spill
         function playGame() { //FEIL. Skrivefeil functio --> functio(n)
             //Startverdier
@@ -188,12 +205,12 @@
             //"reseter" score til 0 hver gang man skal spille et nytt spill
             aliensCaught = 0
             //Definerer hva countdown variabelen skal være
-            countdown = 10 //60
+            countdown = 6 //60
             gameOver = false
             //player- og enemyLoaded endret til true, de må vises når play knappen blir trykket på
             playerLoaded = true
             enemyLoaded = true
-
+            x = 1
             document.getElementById("replay").style.display = "none"
             
             //Tegne spill-elementer ved oppstart
