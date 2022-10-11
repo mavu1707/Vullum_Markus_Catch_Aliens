@@ -34,7 +34,7 @@
         let countdown;
         let iconsize = 64
         let gameOver = false
-        const player = { speed: 2 } //Beholder speed på 2, grunnet speed blir for raskt for spillet å rendre hvis den skal være på 250, og med speedmodifier blir det for raskt for de kommende rundene
+        const player = { speed: 250 } 
         const enemy = { }
         const enemy2 = { }
         let aliensCaught = 0
@@ -221,9 +221,13 @@
 
         //Funksjon som kjører spillet
         function renderGame() {
-            playerMovement(1)
+            playerMovement(0.02)
             drawGameElements()
-            requestAnimationFrame(renderGame)
+            if(gameOver == false){ //for å sørge for at playerMovement ikke blir stacka oppo hverandre i bakgrunnen, speed blir ikke raksere
+                requestAnimationFrame(renderGame)
+            } else{
+                return
+            }
         }
 
         // Cross-browser support for requestAnimationFrame (https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame)
@@ -239,7 +243,7 @@
             //"reseter" score til 0 hver gang man skal spille et nytt spill
             aliensCaught = 0
             //Definerer hva countdown variabelen skal være
-            countdown = 60
+            countdown = 5
             gameOver = false
             //player- og enemyLoaded endret til true, de må vises når play knappen blir trykket på
             playerLoaded = true
